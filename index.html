@@ -1,37 +1,270 @@
-<!DOCTYPE html>
+from pathlib import Path
+p = Path("/mnt/data/balaji_events.html")
+html = r'''<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EventPro - Event Management</title>
+<meta name="theme-color" content="#101010">
+<title>Balaji Events | Crafted to Celebrate</title>
 <style>
-body{margin:0;font-family:Arial,sans-serif;background:#f4f4f4}
-header{background:#222;color:#fff;padding:15px;text-align:center}
-.hero{height:70vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#6a11cb,#2575fc);color:#fff;text-align:center}
-.btn{background:#ff6600;color:#fff;padding:12px 24px;text-decoration:none;border-radius:5px}
-.section{padding:50px 10%;text-align:center}
-.cards{display:flex;gap:20px;flex-wrap:wrap;justify-content:center}
-.card{background:#fff;padding:20px;width:280px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
-footer{background:#222;color:#fff;text-align:center;padding:15px}
+:root{--gold:#d9b36a;--gold2:#f1d9a0;--black:#10100f;--panel:#191917;--muted:#aaa69c;--white:#f8f5ed}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--black);color:var(--white);line-height:1.6}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit}
+header{height:84px;padding:0 7%;display:flex;align-items:center;justify-content:space-between;position:absolute;top:0;left:0;right:0;z-index:5;border-bottom:1px solid #ffffff20;background:#0a0a09a8;backdrop-filter:blur(12px)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{width:43px;height:43px;border:1px solid var(--gold);color:var(--gold);display:grid;place-items:center;font-family:Georgia,serif;font-size:24px;transform:rotate(45deg)}
+.brand-mark span{transform:rotate(-45deg)}
+.brand-name{font-family:Georgia,serif;letter-spacing:2px;font-size:20px}.brand-name small{display:block;font:9px Arial,sans-serif;letter-spacing:4px;color:var(--gold);margin-top:2px}
+nav{display:flex;gap:28px;align-items:center;font-size:12px;text-transform:uppercase;letter-spacing:1.3px}
+nav a{color:#e7e4dd;transition:color .2s}nav a:hover{color:var(--gold)}
+.btn{display:inline-block;background:var(--gold);color:#17130b;border:1px solid var(--gold);padding:14px 22px;font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:.25s}
+.btn:hover{background:transparent;color:var(--gold);transform:translateY(-2px)}
+.btn-outline{background:transparent;color:var(--white);border-color:#ffffff70}
+.menu{display:none;background:none;border:0;color:white;font-size:27px}
+.hero{min-height:760px;height:100vh;max-height:980px;display:flex;align-items:center;position:relative;background:linear-gradient(90deg,rgba(5,5,5,.88),rgba(5,5,5,.35) 60%,rgba(5,5,5,.18)),url('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=2200&q=90') center/cover}
+.hero:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,#10100f 0%,transparent 25%)}
+.hero-inner{width:86%;max-width:1200px;margin:70px auto 0;position:relative;z-index:1}
+.eyebrow{font-size:10px;color:var(--gold);font-weight:bold;letter-spacing:4px;text-transform:uppercase;display:flex;align-items:center;gap:12px}
+.eyebrow:before{content:"";width:35px;height:1px;background:var(--gold)}
+h1,h2,h3{font-family:Georgia,'Times New Roman',serif;font-weight:400}
+h1{font-size:clamp(52px,8vw,105px);line-height:.99;letter-spacing:-2px;max-width:850px;margin:28px 0}
+h1 em{color:var(--gold);font-weight:400}
+.hero-copy{max-width:510px;color:#d3d0c8;font-size:16px;line-height:1.9}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:32px}
+.hero-bottom{position:absolute;z-index:2;bottom:52px;right:7%;display:flex;align-items:center;gap:15px;color:#ddd;font-size:10px;letter-spacing:2px;text-transform:uppercase}
+.hero-bottom span{display:block;width:55px;height:1px;background:var(--gold)}
+.intro-strip{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #ffffff16;border-bottom:1px solid #ffffff16;padding:27px 7%;background:#131311}
+.stat{text-align:center;border-right:1px solid #ffffff18}.stat:last-child{border:0}.stat strong{display:block;font:30px Georgia,serif;color:var(--gold)}.stat small{color:var(--muted);font-size:10px;letter-spacing:2px;text-transform:uppercase}
+section{padding:100px 7%}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:42px}
+.section-head h2,.about-copy h2,.contact-copy h2{font-size:clamp(36px,5vw,60px);line-height:1.08;margin-top:15px}
+.section-head>p{max-width:420px;color:var(--muted);font-size:14px;line-height:1.9}
+.services{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.service{background:var(--panel);border:1px solid #ffffff0d;overflow:hidden;transition:transform .3s,border-color .3s}
+.service:hover{transform:translateY(-6px);border-color:#d9b36a80}
+.service img{width:100%;height:235px;object-fit:cover;display:block;filter:saturate(.8)}
+.service-body{padding:26px 25px 28px}
+.service-no{font-size:10px;color:var(--gold);letter-spacing:2px}
+.service h3{font-size:27px;margin:10px 0}
+.service p{font-size:13px;color:var(--muted);line-height:1.9;min-height:73px}
+.service a{display:inline-block;color:var(--gold);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;margin-top:20px;border-bottom:1px solid #d9b36a70;padding-bottom:5px}
+.about{display:grid;grid-template-columns:1fr 1fr;gap:8%;align-items:center;background:#171715}
+.about-img{position:relative;padding:0 25px 25px 0}
+.about-img:after{content:"";position:absolute;right:0;bottom:0;width:65%;height:65%;border:1px solid var(--gold);z-index:0}
+.about-img img{position:relative;z-index:1;width:100%;height:490px;object-fit:cover}
+.about-copy p{color:var(--muted);font-size:14px;line-height:2;margin:22px 0}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin:25px 0 30px}
+.check{font-size:12px;color:#e7e2d7}.check b{color:var(--gold);margin-right:8px}
+.gallery{display:grid;grid-template-columns:1.25fr 1fr 1fr;grid-template-rows:230px 230px;gap:13px}
+.gallery img{width:100%;height:100%;object-fit:cover;filter:saturate(.8);transition:filter .3s,transform .4s}
+.gallery a{overflow:hidden}.gallery a:hover img{filter:saturate(1.1);transform:scale(1.04)}
+.gallery a:first-child{grid-row:span 2}
+.packages{background:#171715}
+.package-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.package{padding:34px 28px;border:1px solid #ffffff24;background:#10100f;position:relative}
+.package.featured{border-color:var(--gold);background:linear-gradient(145deg,#252116,#10100f)}
+.package-label{font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase}
+.package h3{font-size:30px;margin:15px 0}
+.package p{font-size:13px;color:var(--muted);line-height:1.9;min-height:74px}
+.package ul{list-style:none;margin:22px 0 28px}
+.package li{font-size:12px;padding:10px 0;border-bottom:1px solid #ffffff12;color:#ddd}
+.package li:before{content:"✦";color:var(--gold);margin-right:10px}
+.package .btn{width:100%;text-align:center}
+.gallery-note{text-align:center;color:var(--muted);font-size:12px;margin-top:20px}
+.testimonial{text-align:center;background:linear-gradient(#10100fdb,#10100fdb),url('https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1800&q=85') center/cover fixed}
+.testimonial blockquote{max-width:850px;margin:25px auto;font:clamp(25px,4vw,43px)/1.4 Georgia,serif}
+.testimonial .byline{color:var(--gold);font-size:10px;letter-spacing:3px;text-transform:uppercase}
+.contact{display:grid;grid-template-columns:.85fr 1.15fr;gap:8%;align-items:start}
+.contact-copy p{color:var(--muted);font-size:14px;line-height:2;margin:20px 0}
+.contact-details{margin-top:30px;border-top:1px solid #ffffff1b}
+.contact-details div{padding:16px 0;border-bottom:1px solid #ffffff1b;font-size:13px;color:#dedbd3}
+.contact-details strong{display:block;color:var(--gold);font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:5px}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:17px}
+.form label{display:block;font-size:10px;color:#d9b36a;letter-spacing:1.5px;margin-bottom:8px}
+.form input,.form select,.form textarea{width:100%;background:#191917;border:1px solid #ffffff20;padding:14px;color:#f8f5ed;outline:none}
+.form input:focus,.form select:focus,.form textarea:focus{border-color:var(--gold)}
+.form .full{grid-column:1/-1}.form textarea{min-height:120px;resize:vertical}.form .btn{width:100%}
+.notice{display:none;color:#e9d5a8;font-size:13px;line-height:1.7;padding:13px;border:1px solid #d9b36a50}
+footer{padding:35px 7%;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;border-top:1px solid #ffffff16;background:#0a0a09}
+footer p{font-size:11px;color:var(--muted)}.footer-brand{font:20px Georgia,serif;letter-spacing:2px}.footer-brand span{color:var(--gold)}
+@media(max-width:900px){nav{gap:15px;font-size:10px}.nav-cta{display:none}.services,.package-grid{grid-template-columns:1fr 1fr}.about{gap:35px}.about-img img{height:410px}.gallery{grid-template-rows:190px 190px}}
+@media(max-width:650px){header{height:75px;padding:0 5%}.menu{display:block}nav{display:none;position:absolute;top:75px;left:0;right:0;background:#111;padding:25px;flex-direction:column;align-items:flex-start;font-size:12px}nav.open{display:flex}.hero{min-height:710px}.hero-inner{width:90%;margin-top:75px}h1{letter-spacing:-1px}.hero-bottom{display:none}.intro-strip{padding:24px 4%}.stat strong{font-size:24px}.stat small{font-size:8px;letter-spacing:1px}section{padding:70px 6%}.section-head{display:block}.section-head>p{margin-top:18px}.services,.package-grid{grid-template-columns:1fr}.service p,.package p{min-height:0}.about{grid-template-columns:1fr}.about-img img{height:350px}.gallery{grid-template-columns:1fr 1fr;grid-template-rows:170px 170px 170px}.gallery a:first-child{grid-row:span 2}.contact{grid-template-columns:1fr}.form{grid-template-columns:1fr}.form .full{grid-column:auto}.testimonial{background-attachment:scroll}footer{padding:30px 6%}}
 </style>
 </head>
 <body>
-<header><h1>EventPro</h1></header>
-<section class="hero">
-<div>
-<h1>Professional Event Management</h1>
-<p>Weddings • Birthdays • Corporate Events • Sound & Lighting</p>
-<a href="#" class="btn">Book Now</a>
-</div>
+<header>
+  <a class="brand" href="#home" aria-label="Balaji Events home">
+    <span class="brand-mark"><span>B</span></span>
+    <span class="brand-name">BALAJI <small>EVENTS & ENTERTAINMENT</small></span>
+  </a>
+  <button class="menu" id="menuBtn" aria-label="Open menu">☰</button>
+  <nav id="nav">
+    <a href="#home">Home</a><a href="#services">Services</a><a href="#about">About Us</a><a href="#gallery">Gallery</a><a href="#packages">Packages</a>
+    <a class="btn nav-cta" href="#contact">Plan Your Event ↗</a>
+  </nav>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div class="eyebrow">Turning moments into memories</div>
+    <h1>Your vision.<br>Our <em>creation.</em></h1>
+    <p class="hero-copy">From grand weddings to electrifying DJ nights, we bring people together with extraordinary event experiences, stunning production and flawless execution.</p>
+    <div class="hero-actions">
+      <a class="btn" href="#contact">Plan Your Event ↗</a>
+      <a class="btn btn-outline" href="#services">Explore Our Services</a>
+    </div>
+  </div>
+  <div class="hero-bottom"><span></span>Every celebration deserves to shine</div>
 </section>
-<section class="section">
-<h2>Our Services</h2>
-<div class="cards">
-<div class="card"><h3>Wedding Planning</h3><p>Elegant and memorable weddings.</p></div>
-<div class="card"><h3>Sound & Lighting</h3><p>Professional audio and lighting solutions.</p></div>
-<div class="card"><h3>Corporate Events</h3><p>Conferences, launches, and business gatherings.</p></div>
+
+<div class="intro-strip">
+  <div class="stat"><strong>100+</strong><small>Events Celebrated</small></div>
+  <div class="stat"><strong>5★</strong><small>Premium Experience</small></div>
+  <div class="stat"><strong>One Team</strong><small>From Idea to Impact</small></div>
 </div>
+
+<section id="services">
+  <div class="section-head">
+    <div><div class="eyebrow">What we do</div><h2>Experiences, beautifully<br>put together.</h2></div>
+    <p>Creative ideas meet professional execution. We take care of the details so you can be present for every unforgettable moment.</p>
+  </div>
+  <div class="services">
+    <article class="service">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1000&q=85" alt="Elegant wedding event decor">
+      <div class="service-body"><span class="service-no">01 / CELEBRATIONS</span><h3>Weddings & Receptions</h3><p>Beautiful mandaps, elegant stage decor, floral styling and seamless coordination for your big day.</p><a href="#contact">Create your celebration ↗</a></div>
+    </article>
+    <article class="service">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=1000&q=85" alt="Live music event with a crowd">
+      <div class="service-body"><span class="service-no">02 / LIVE ENERGY</span><h3>DJ, Sound & Lighting</h3><p>Powerful sound systems, dynamic lighting, DJs and stage effects that turn a gathering into a show.</p><a href="#contact">Turn up the energy ↗</a></div>
+    </article>
+    <article class="service">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1000&q=85" alt="Beautifully decorated celebration venue">
+      <div class="service-body"><span class="service-no">03 / SPECIAL MOMENTS</span><h3>Private & Corporate Events</h3><p>Birthdays, anniversaries, launches and business gatherings designed around your purpose and style.</p><a href="#contact">Make it memorable ↗</a></div>
+    </article>
+  </div>
 </section>
-<footer>&copy; 2026 EventPro</footer>
+
+<section class="about" id="about">
+  <div class="about-img"><img loading="lazy" src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1200&q=85" alt="Luxury event table and venue styling"></div>
+  <div class="about-copy">
+    <div class="eyebrow">The Balaji difference</div>
+    <h2>Big ideas.<br>Beautiful details.</h2>
+    <p>At Balaji Events, we believe the best celebrations are the ones that feel uniquely yours. We bring creative thinking, reliable planning and an eye for detail to every event we produce.</p>
+    <div class="checks">
+      <div class="check"><b>✦</b> Creative event concepts</div>
+      <div class="check"><b>✦</b> Professional production</div>
+      <div class="check"><b>✦</b> Premium sound & lights</div>
+      <div class="check"><b>✦</b> Dedicated coordination</div>
+    </div>
+    <a class="btn" href="#contact">Let's Create Something ↗</a>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="section-head">
+    <div><div class="eyebrow">A little inspiration</div><h2>Moments that make<br>the memories.</h2></div>
+    <p>Every event has its own atmosphere. Explore a few visual inspirations for your next celebration.</p>
+  </div>
+  <div class="gallery">
+    <a href="#contact" aria-label="Wedding event inspiration"><img loading="lazy" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=85" alt="Romantic wedding setup"></a>
+    <a href="#contact" aria-label="Concert inspiration"><img loading="lazy" src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=800&q=85" alt="Concert stage lights"></a>
+    <a href="#contact" aria-label="Event dinner inspiration"><img loading="lazy" src="https://images.unsplash.com/photo-1507504031003-b417219a0d5a?auto=format&fit=crop&w=800&q=85" alt="Elegant outdoor event"></a>
+    <a href="#contact" aria-label="Party inspiration"><img loading="lazy" src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=85" alt="Festival and party lights"></a>
+    <a href="#contact" aria-label="Wedding table inspiration"><img loading="lazy" src="https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=800&q=85" alt="Wedding table and floral decor"></a>
+  </div>
+  <p class="gallery-note">Images are for design inspiration. Replace them with photos of your own events for a personalized portfolio.</p>
+</section>
+
+<section class="packages" id="packages">
+  <div class="section-head">
+    <div><div class="eyebrow">Choose your experience</div><h2>Event packages.</h2></div>
+    <p>Start with a package that fits your vision. We'll tailor the details to your venue, guest count and requirements.</p>
+  </div>
+  <div class="package-grid">
+    <article class="package">
+      <span class="package-label">01 / Intimate</span><h3>Essential</h3><p>For smaller gatherings that deserve thoughtful details and a polished setup.</p>
+      <ul><li>Basic event planning</li><li>Standard decor setup</li><li>Sound system options</li><li>Event-day coordination</li></ul>
+      <a class="btn btn-outline" href="#contact">Request a Quote</a>
+    </article>
+    <article class="package featured">
+      <span class="package-label">02 / Most Popular</span><h3>Signature</h3><p>A premium, coordinated experience with standout styling and production.</p>
+      <ul><li>Personalized event concept</li><li>Premium stage and decor</li><li>Sound and lighting setup</li><li>Dedicated event coordinator</li></ul>
+      <a class="btn" href="#contact">Request a Quote</a>
+    </article>
+    <article class="package">
+      <span class="package-label">03 / Extraordinary</span><h3>Grand Luxe</h3><p>For large-scale celebrations that call for a bold look and a bespoke plan.</p>
+      <ul><li>Custom event production</li><li>Luxury decor and styling</li><li>Advanced lighting design</li><li>End-to-end coordination</li></ul>
+      <a class="btn btn-outline" href="#contact">Request a Quote</a>
+    </article>
+  </div>
+</section>
+
+<section class="testimonial">
+  <div class="eyebrow" style="justify-content:center">Make it a moment</div>
+  <blockquote>“The best events don't just fill a room. They create a feeling that stays long after the lights go down.”</blockquote>
+  <div class="byline">Balaji Events · Crafted to Celebrate</div>
+</section>
+
+<section id="contact">
+  <div class="contact">
+    <div class="contact-copy">
+      <div class="eyebrow">Let's talk about your event</div>
+      <h2>Have a date?<br>Let's make it special.</h2>
+      <p>Tell us a little about your celebration. Share the occasion, date and ideas, and our team can follow up to discuss your requirements.</p>
+      <div class="contact-details">
+        <div><strong>Call / WhatsApp</strong>Replace with your business phone number</div>
+        <div><strong>Email</strong>Replace with your business email address</div>
+        <div><strong>Service Area</strong>Add your city and event locations</div>
+      </div>
+    </div>
+    <form class="form" id="eventForm">
+      <div><label for="name">YOUR NAME *</label><input id="name" required placeholder="Full name"></div>
+      <div><label for="phone">PHONE NUMBER *</label><input id="phone" required type="tel" placeholder="+91 00000 00000"></div>
+      <div><label for="eventType">EVENT TYPE *</label><select id="eventType" required><option value="">Choose an event</option><option>Wedding / Reception</option><option>DJ / Sound & Lighting</option><option>Birthday / Anniversary</option><option>Corporate Event</option><option>Engagement</option><option>Other</option></select></div>
+      <div><label for="eventDate">EVENT DATE</label><input id="eventDate" type="date"></div>
+      <div class="full"><label for="guests">ESTIMATED GUESTS</label><select id="guests"><option>Not decided yet</option><option>Under 100</option><option>100–300</option><option>300–500</option><option>500+</option></select></div>
+      <div class="full"><label for="details">TELL US YOUR VISION</label><textarea id="details" placeholder="Venue, location, ideas, services you need..."></textarea></div>
+      <div class="full"><button class="btn" type="submit">Send Event Enquiry ↗</button></div>
+      <p class="notice full" id="formNotice" role="status"></p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <a class="footer-brand" href="#home">BALAJI <span>EVENTS</span></a>
+  <p>Turning moments into memories.</p>
+  <p>© <span id="year"></span> Balaji Events. All rights reserved.</p>
+</footer>
+
+<script>
+const menuBtn=document.getElementById('menuBtn');
+const nav=document.getElementById('nav');
+menuBtn.addEventListener('click',()=>{
+  nav.classList.toggle('open');
+  menuBtn.textContent=nav.classList.contains('open')?'✕':'☰';
+});
+nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+  nav.classList.remove('open');menuBtn.textContent='☰';
+}));
+document.getElementById('year').textContent=new Date().getFullYear();
+const eventDate=document.getElementById('eventDate');
+const now=new Date();eventDate.min=new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,10);
+document.getElementById('eventForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const notice=document.getElementById('formNotice');
+  notice.textContent='Thank you, '+document.getElementById('name').value+
+    '! Your enquiry details are filled in. Connect this form to email, WhatsApp or a backend to receive real bookings.';
+  notice.style.display='block';
+});
+</script>
 </body>
-</html>
+</html>'''
+p.write_text(html, encoding="utf-8")
+print(f"Created {p} ({p.stat().st_size} bytes)")
+
